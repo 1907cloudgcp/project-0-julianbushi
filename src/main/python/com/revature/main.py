@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
-from fileio import io
-from service import service
+import logging
+import logging.config
+import yaml
 from controller import controller
-'''
-This is your main script, this should call several other scripts within your packages.
-'''
+
 def main():
-        controller.login_menu()
-        #print(service.getUserList())
-        #service.registerUser('newperson', 'passww')
+    try:
+        with open('../../../resources/logging.yaml','r') as f:
+            config = yaml.safe_load(f.read())
+        logging.config.dictConfig(config)
+    except:
+        logging.basicConfig(level=logging.DEBUG)
+        print('Logging configuration not found')
+    
+    controller.login_menu()
 
 if __name__ == '__main__':
-	main()
+    main()
