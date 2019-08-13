@@ -3,3 +3,9 @@ class AccountNotFoundError(Exception):
 
 class CheckError(Exception):
     pass
+
+class TransferError(ValueError):
+    pass
+
+class InputError(ValueError):
+    pass

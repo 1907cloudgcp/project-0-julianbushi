@@ -30,4 +30,4 @@ handlers:
 root:
     #Change this value only to change your whole application top logging LEVEL
     level: DEBUG
-    handlers: [console, transaction, errors]
+    handlers: [transaction, errors]

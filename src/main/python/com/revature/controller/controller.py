@@ -33,41 +33,43 @@ def user_menu(loggedUser):
             #Deposit
             while True:
                 print('Enter the amount you wish to deposit: ')
-                amount = float(input('$'))
-                if amount > 0:
-                    amount = '{:.2f}'.format(amount)
+                try:
+                    amount = float(input('$'))
+                    if amount < 0:
+                        raise InputError
                     service.transfer(loggedUser, amount, 1)
                     break
-                else:
+                except:
                     print('Please enter a positive value')
         elif selection == '2':
             #Withdraw
             while True:
                 print('Enter the amount you wish to withdraw: ')
-                amount = float(input('$'))
-                if amount > 0:
-                    amount = '{:.2f}'.format(amount)
+                try:
+                    amount = float(input('$'))
+                    if amount < 0:
+                        raise InputError
                     service.transfer(loggedUser, amount, 2)
                     break
-                else:
+                except:
                     print('Please enter a positive value')
         elif selection == '3':
             #View Balance
             print('\nYour balance is: $' + str(service.getBalance(loggedUser)) + '\n')
         elif selection == '4':
             # View Transaction History
-            service.getHistory(loggedUser)
+            service.printHistory(loggedUser)
         elif selection.upper() == 'Q':
             return
         else:
             print('That is not a valid input. Please try again.\n')
     
 def login():
-    isLogin = False
+    loggedOn = False
     user = None
     
     print('Enter your username and password.\n')
-    while not isLogin:
+    while not loggedOn:
         user = input('user: ')
         passwd = input('pass: ')
 
@@ -79,7 +81,7 @@ def login():
             elif check == 1: #user found, password incorrect
                 print('Password for user ' + user + ' is incorrect. Please try again.\n')
             elif  check == 2: #user found & password correct
-                isLogin = True
+                loggedOn = True
             else:
                 raise CheckError
         except:
@@ -88,16 +90,24 @@ def login():
     return user
 
 def register():
-    valid = False
+    validUserEntry = False
+    validPassEntry = False
+    
+    while not validUserEntry:
+        user = input('Enter the username for your new account: ')
 
-    user = input('Enter the username for your new account: ')
-    while not valid:
+        if service.checkUser(user) is False:
+            validUserEntry = True 
+        else:
+            print('That username already exists. Try again')
+       
+    while not validPassEntry:
         passwd = input('Enter the password for your new account: ')
         passwd2 = input('Confirm new password: ')
 
         if passwd == passwd2:
             service.registerUser(user, passwd)
-            valid = True
+            validPassEntry = True
         else:
             print('Entered passwords do not match. Please try again.\n\n')
 
