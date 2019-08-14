@@ -41,6 +41,21 @@ class BankTest(unittest.TestCase):
     def test_e_transactionLog(self):
         history = service.getHistory('testuser')
         self.assertEqual(len(history), 5)
+
+
+class LoginTest(unittest.TestCase):
+
+    def test_login(self):
+        result = service.loginUser('jbushi', 'pass1')
+        self.assertEqual(result, 2)
+
+    def test_login_wrong(self):
+        result = service.loginUser('jbushi', 'password')
+        self.assertEqual(result, 1)
+
+    def test_login_not_found(self):
+        result = service.loginUser('myuser', 'none')
+        self.assertEqual(result, 0)  
     
 if __name__ == '__main__':
         
