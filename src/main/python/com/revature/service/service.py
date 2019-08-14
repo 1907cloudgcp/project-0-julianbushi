@@ -88,13 +88,15 @@ def transfer(user, amount, op):
         logstr = 'Deposit $' + amount + '!' + user
     else:
         try:
+            if float(amount) < 0:
+                raise TransferError
             nBalance = float(account.get('balance')) - float(amount)
             if nBalance < 0:
                 raise TransferError
             logstr = 'Withdraw $' + amount + '!' + user
         except:
             logging.error(user + ': withdrawl not possible')
-            print('You do not have enough money to withdraw.')
+            print('Withdrawl not possible.')
             return
     b = {'balance' : '{:.2f}'.format(nBalance)}
     account.update(b)
