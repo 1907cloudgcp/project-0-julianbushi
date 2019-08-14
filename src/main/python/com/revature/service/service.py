@@ -78,6 +78,12 @@ def transfer(user, amount, op):
     amount = '{:.2f}'.format(amount)
     logstr = ''
     if op == 1:
+        try:
+            if float(amount) < 0:
+                raise TransferError
+        except:
+            print('Exception: value out of range')
+            return
         nBalance = float(account.get('balance')) + float(amount)
         logstr = 'Deposit $' + amount + '!' + user
     else:
