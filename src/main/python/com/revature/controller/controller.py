@@ -14,20 +14,20 @@ def login_menu():
             return None
         elif selection.upper() == 'L':
             loggedUser = login()
-            break
+            user_menu(loggedUser)
         elif selection.upper() == 'R':
             register()
         else:
             print('That is not a valid input. Please try again.\n')
 
-    user_menu(loggedUser)
+    
     
 def user_menu(loggedUser):
     
     selection = ''
     print('Welcome, ' + loggedUser + '. What would you like to do?')
     while True:
-        print('1) Deposit\n2) Withdraw\n3) View Balance\n4) View Transaction History\nPress Q to exit...')
+        print('1) Deposit\n2) Withdraw\n3) View Balance\n4) View Transaction History\nPress Q to logout...')
         selection = input()
         if selection == '1':
             #Deposit
